@@ -1,0 +1,13 @@
+# config.py
+
+AZURE_SPEECH_KEY = ""
+AZURE_SPEECH_REGION = "centralindia"
+
+OPENAI_API_KEY = ""
+OPENAI_MODEL = "gpt-3.5-turbo-0125"
+
+GMAIL_ADDRESS = ""
+GMAIL_APP_PASSWORD = ""
+GUARDIAN_EMAIL = ""
+
+

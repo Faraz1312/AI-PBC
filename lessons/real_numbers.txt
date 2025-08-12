@@ -1,0 +1,37 @@
+Welcome to Part 2: Real Numbers — Chapter 1 of your NCERT Math textbook.
+
+Let’s begin gently.
+
+The word ‘real’ here doesn’t mean fake versus real — it means all the numbers you’ve learned till now, combined.
+
+Real numbers include both rational and irrational numbers.
+
+Now let’s zoom into prime numbers.
+
+A prime number has exactly two factors — one, and itself. That means it can’t be divided evenly by anything else.
+
+Examples are two, three, five, seven, and so on.
+
+Now here comes an important concept — the Fundamental Theorem of Arithmetic.
+
+It means: Every number that’s not a prime can be broken down into a product of prime numbers.
+
+For example, sixty is two times two times three times five.
+
+Now, let’s learn about HCF — Highest Common Factor.
+
+Suppose you have two numbers. HCF is the largest number that divides both.
+
+Like eight and twelve. Their HCF is four.
+
+Now LCM — Least Common Multiple.
+
+It’s the smallest number that both numbers can divide into.
+
+For three and four, the LCM is twelve.
+
+Let that sink in...
+
+That's the end of this lesson.
+
+Don’t forget to take the test for this chapter to check your understanding!

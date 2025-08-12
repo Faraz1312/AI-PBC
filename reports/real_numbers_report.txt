@@ -1,0 +1,8 @@
+Test: real numbers
+Score: 1/1
+
+1. The square root of a non-perfect square is always dash.
+Your Answer: irrational.
+Correct Answer: irrational
+Result: ✅
+

@@ -1,0 +1,19 @@
+Welcome to Part 1: Clearing the Basics of Mathematics. Let's begin from the very roots. Take a breath... and let's dive in together.
+
+We use numbers every day — to count, to measure, to label things like price or age. Now, there are different types of numbers. Let me explain them one by one.
+
+First, natural numbers. These are counting numbers that start from one and go on — like one, two, three, and so on.
+
+Then we have whole numbers. These are natural numbers, but with zero added at the beginning. So zero, one, two, three...
+
+Next are integers. These include all whole numbers, plus their negative counterparts — like minus one, minus two, and so on.
+
+Now comes a special kind — rational numbers. These are numbers you can express as a fraction. Like one by two, or five by ten.
+
+If a number can be written as a ratio of two integers, it’s called rational.
+
+But what about numbers like pi or square root of two? You can’t write them as exact fractions. These are irrational numbers.
+
+You're doing really well. That’s it for this part.
+
+Don’t forget to take the test for this chapter to check your understanding!

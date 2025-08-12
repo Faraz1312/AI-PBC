@@ -1,0 +1,8 @@
+Test: daily reasoning
+Score: 1/1
+
+1. What comes next in the pattern: 5, 10, 15, dash?
+Your Answer: 20.
+Correct Answer: 20
+Result: ✅
+

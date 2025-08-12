@@ -1,0 +1,24 @@
+TYPE: MCQ
+Q: Which of these numbers is irrational?
+Options: A. 5, B. 3/4, C. √2, D. 0.5
+A: C
+
+TYPE: MCQ
+Q: What is the decimal representation of 1/3?
+Options: A. 0.3, B. 0.33, C. 0.333..., D. 3.0
+A: C
+
+TYPE: MCQ
+Q: Which of the following is not a rational number?
+Options: A. 2, B. -5, C. π, D. 1/7
+A: C
+
+TYPE: FILL_BLANK
+Q: Every rational number can be expressed in the form of dash.
+A: p/q
+
+TYPE: FILL_BLANK
+Q: The square root of a non-perfect square is always dash.
+A: irrational
+
+

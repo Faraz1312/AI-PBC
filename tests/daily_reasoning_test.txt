@@ -1,0 +1,22 @@
+TYPE: MCQ
+Q: If today is Tuesday, what day will it be after 3 days?
+Options: A. Wednesday, B. Thursday, C. Friday, D. Saturday
+A: C
+
+TYPE: MCQ
+Q: Which word doesn’t belong: Apple, Mango, Banana, Carrot?
+Options: A. Apple, B. Mango, C. Banana, D. Carrot
+A: D
+
+TYPE: MCQ
+Q: Find the odd one out: 2, 3, 5, 7, 9
+Options: A. 2, B. 3, C. 7, D. 9
+A: D
+
+TYPE: FILL_BLANK
+Q: A triangle has dash sides.
+A: 3
+
+TYPE: VERY_SHORT
+Q: What comes next in the pattern: 5, 10, 15, dash?
+A: 20

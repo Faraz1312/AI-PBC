@@ -1,0 +1,21 @@
+TYPE: MCQ
+Q: What is 15% of 200?
+Options: A. 15, B. 20, C. 25, D. 30
+A: D
+
+TYPE: MCQ
+Q: Which number is a prime number?
+Options: A. 4, B. 6, C. 13, D. 15
+A: C
+
+TYPE: FILL_BLANK
+Q: 8 times 7 equals dash.
+A: 56
+
+TYPE: VERY_SHORT
+Q: What is the next prime number after 7?
+A: 11
+
+TYPE: VERY_SHORT
+Q: What is the sum of the first 5 natural numbers?
+A: 15

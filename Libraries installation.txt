@@ -1,0 +1,11 @@
+sudo apt-get install python3-dev
+sudo apt-get update
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg
+pip install sounddevice --break -system -packages
+pip install webrtcvad --break -system -packages
+pip install numpy --break -system -packages
+pip install scipy --break -system -packages
+pip install openai --break -system -packages
+pip install azure-cognitiveservices-speech --break -system -packages
+
+(NOTE- ENSURE THE CREATION AND ACTIVATION OF THE VIRTUAL ENVIRONMENT) 

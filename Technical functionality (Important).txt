@@ -1,0 +1,65 @@
+AI²PBC - Functional Overview
+
+This document describes all core technical functions performed by AI²PBC.
+
+1. SYSTEM INITIALIZATION
+   - Auto-start on Raspberry Pi boot via crontab.
+   - Run startup bash script to initialize microphone, speaker, and modules.
+   - Play an audio greeting and load the main menu.
+
+2. SPEECH INPUT PROCESSING
+   - Capture voice commands via USB microphone.
+   - Convert speech to text using Microsoft Azure Speech-to-Text (STT) service.
+   - Pass transcribed text to the command router for mode selection.
+
+3. COMMAND ROUTING & MODE SELECTION
+   - Interpret voice commands to determine selected mode:
+     a) Learn Mode
+     b) Doubts Mode
+     c) Talk Mode
+     d) Tests Mode
+     e) Audio Notes Mode
+     f) Performance Mode
+
+4. LEARN MODE (Interactive Lessons)
+   - Read lesson content from local .txt files in 2-line blocks.
+   - Pause after each block for commands: "next", "repeat", "explain more".
+   - On "explain more", send text to GPT-3.5 for an expanded explanation.
+
+5. DOUBTS MODE (AI Mentor)
+   - Allow open-ended student questions.
+   - Send queries to GPT-3.5 for context-aware answers.
+   - Convert responses to speech using Azure Text-to-Speech (TTS).
+
+6. TALK MODE (Casual Conversation)
+   - Engage in general, friendly conversation with the student.
+   - Offer motivational tips and emotional support.
+
+7. TESTS MODE (Verbal Testing)
+   - Load chapter-wise test files (MCQs, fill-in-the-blanks, assertion-reason, short answers).
+   - Read questions aloud and capture spoken answers.
+   - Compare responses to answer key for scoring.
+   - Provide instant verbal feedback: "Correct" / "Incorrect".
+
+8. PERFORMANCE REPORTING
+   - Calculate total score and accuracy percentage.
+   - Generate a .txt performance report.
+   - Send report via email to registered guardian using Gmail API.
+
+9. AUDIO NOTES MODE
+   - Record personal audio notes via microphone.
+   - Transcribe notes to text using Azure STT.
+   - Save as .txt files organized by chapter/topic.
+   - Allow playback of recorded notes on request.
+
+10. TEXT-TO-SPEECH OUTPUT
+    - Use Azure TTS to convert all text (lessons, answers, reports) into clear audio.
+    - Ensure speech output is optimized for Indian English accent.
+
+11. OFFLINE-FIRST OPERATION
+    - Run all lesson playback, tests, and note storage without internet.
+    - Fall back to cloud services (Azure, OpenAI) only when online.
+
+12. SYSTEM SHUTDOWN FUNCTION
+    - Use hardware push button to initiate safe shutdown sequence.
+    - Prevents file corruption and ensures battery protection via UPS HAT.

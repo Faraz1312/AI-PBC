@@ -1,0 +1,17 @@
+# Components
+
+## Hardware:
+- Raspberry Pi 5 
+- Waveshare UPS HAT(B)
+- 18650 lithium ion cells{2}
+- Generic USB microphone module
+- Generic mini speaker 
+- Push button(For shutdown function) + a few wires
+
+## Software:
+- Microsoft Azure Speech service for STT and TTS
+- OpenAI service {GPT-3.5-turbo model}
+- Python {scripts}
+- Bash/shell script
+- Crontab{startup automations}
+
