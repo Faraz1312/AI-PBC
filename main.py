@@ -23,7 +23,7 @@ def speak_text(text):
     speech_config.speech_synthesis_voice_name = "en-IN-AaravNeural"
     synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
 
-    # Use SSML to increase speaking speed
+
     ssml = f"""
     <speak version='1.0' xml:lang='en-IN'>
         <voice name='en-IN-AaravNeural'>
