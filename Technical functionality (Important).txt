@@ -1,65 +1,90 @@
-AI²PBC - Functional Overview
+AI²PBC - Functional Overview (V2.1.0 - AI-Enhanced)
+This document describes all core technical functions and the new modular architecture performed by AI 
+2
+ PBC.
 
-This document describes all core technical functions performed by AI²PBC.
+I. ARCHITECTURAL CORE & INITIALIZATION
+SYSTEM INITIALIZATION
 
-1. SYSTEM INITIALIZATION
-   - Auto-start on Raspberry Pi boot via crontab.
-   - Run startup bash script to initialize microphone, speaker, and modules.
-   - Play an audio greeting and load the main menu.
+Auto-start on Raspberry Pi boot via crontab.
 
-2. SPEECH INPUT PROCESSING
-   - Capture voice commands via USB microphone.
-   - Convert speech to text using Microsoft Azure Speech-to-Text (STT) service.
-   - Pass transcribed text to the command router for mode selection.
+Run startup script to initialize microphone and speaker.
 
-3. COMMAND ROUTING & MODE SELECTION
-   - Interpret voice commands to determine selected mode:
-     a) Learn Mode
-     b) Doubts Mode
-     c) Talk Mode
-     d) Tests Mode
-     e) Audio Notes Mode
-     f) Performance Mode
+Load Modular Core: Python loads all modular scripts (core_llm.py, core_speech.py, core_state.py, etc.) into the runtime environment.
 
-4. LEARN MODE (Interactive Lessons)
-   - Read lesson content from local .txt files in 2-line blocks.
-   - Pause after each block for commands: "next", "repeat", "explain more".
-   - On "explain more", send text to GPT-3.5 for an expanded explanation.
+PERSISTENT STATE MANAGEMENT (New)
 
-5. DOUBTS MODE (AI Mentor)
-   - Allow open-ended student questions.
-   - Send queries to GPT-3.5 for context-aware answers.
-   - Convert responses to speech using Azure Text-to-Speech (TTS).
+Load User State: core_state.py loads the user_state.json file to retrieve the last saved lesson and index.
 
-6. TALK MODE (Casual Conversation)
-   - Engage in general, friendly conversation with the student.
-   - Offer motivational tips and emotional support.
+Memory Greeting: Based on the loaded state, the system provides a personalized welcome: "Welcome back! Say 'continue' to resume." (If no state, loads standard greeting).
 
-7. TESTS MODE (Verbal Testing)
-   - Load chapter-wise test files (MCQs, fill-in-the-blanks, assertion-reason, short answers).
-   - Read questions aloud and capture spoken answers.
-   - Compare responses to answer key for scoring.
-   - Provide instant verbal feedback: "Correct" / "Incorrect".
+SPEECH I/O ENGINE
 
-8. PERFORMANCE REPORTING
-   - Calculate total score and accuracy percentage.
-   - Generate a .txt performance report.
-   - Send report via email to registered guardian using Gmail API.
+Input (STT): core_speech.py captures voice commands via USB microphone and converts speech to text using Microsoft Azure STT.
 
-9. AUDIO NOTES MODE
-   - Record personal audio notes via microphone.
-   - Transcribe notes to text using Azure STT.
-   - Save as .txt files organized by chapter/topic.
-   - Allow playback of recorded notes on request.
+Output (TTS): core_speech.py converts all text output to optimized audio using Azure TTS (en-IN-AaravNeural voice).
 
-10. TEXT-TO-SPEECH OUTPUT
-    - Use Azure TTS to convert all text (lessons, answers, reports) into clear audio.
-    - Ensure speech output is optimized for Indian English accent.
+II. INTELLIGENT ROUTING (THE AI BRAIN)
+AI INTENT ROUTING (The V2.1.0 Brain)
 
-11. OFFLINE-FIRST OPERATION
-    - Run all lesson playback, tests, and note storage without internet.
-    - Fall back to cloud services (Azure, OpenAI) only when online.
+The transcribed user text is immediately sent to the core_llm.py module.
 
-12. SYSTEM SHUTDOWN FUNCTION
-    - Use hardware push button to initiate safe shutdown sequence.
-    - Prevents file corruption and ensures battery protection via UPS HAT.
+Intent Classification: The system uses GPT-3.5 (with zero temperature) to classify the natural language query into a structured JSON object (intent and slot).
+
+Direct Dispatch: The main.py router uses the classified intent and slot to bypass the main menu and call the correct feature_module instantly.
+
+Example: User says "Read my Solar System note" → Intent: notes_read, Slot: "solar system." → Directly calls run_notes_module("solar system").
+
+III. FEATURE MODULES
+LEARN MODE (Interactive Lessons)
+
+Resume Feature: Accepts a start_index parameter to resume lessons from the saved index (Persistent Memory).
+
+Reads content from local .txt files in 2-line blocks, pausing for commands.
+
+State Saving: Automatically updates user_state.json every time the user advances or retreats (next, go back).
+
+Explain More: On command, sends text to GPT-3.5 for an expanded, detailed explanation.
+
+DOUBTS/MENTOR MODE
+
+Allows open-ended student questions.
+
+Sends queries to GPT-3.5 for context-aware answers.
+
+TALK MODE (Casual Conversation)
+
+Engages in general, friendly conversation using GPT-3.5.
+
+TESTS MODE (Verbal Testing)
+
+Loads chapter-wise test files and captures spoken answers.
+
+Compares responses to answer keys for scoring and provides instant verbal feedback.
+
+AUDIO NOTES MODE
+
+Supports direct note retrieval using the AI router's notes_read intent.
+
+Allows recording, transcribing (Azure STT), and saving personal notes as text files.
+
+PERFORMANCE REPORTING
+
+Calculates total score and generates a .txt performance report.
+
+Sends report via email to the registered guardian using the Gmail API.
+
+IV. SYSTEM MAINTENANCE
+MODULAR CODE STRUCTURE
+
+Code is maintained in three layers: Core (I/O, LLM, State), Features (Lesson, Notes, etc.), and the Router (main.py), ensuring high maintainability and scalability.
+
+OFFLINE-FIRST OPERATION
+
+Note: This version uses stable cloud services. The modular structure (with separate core_llm.py and core_speech.py) is designed to allow for easy replacement with Vosk and TinyLlama modules for offline capability in a future update.
+
+SYSTEM SHUTDOWN FUNCTION
+
+Uses a hardware push button to initiate a safe shutdown sequence.
+
+Prevents file corruption and ensures battery protection via UPS HAT.
