@@ -26,7 +26,7 @@ Millions of blind and visually impaired children lack access to quality educatio
 
 ---
 
-##  Core Features (V3.2 Update)  
+##  Core Features (V2.1.0 Update)  
 - **AI-Driven Navigation (The "Brain")** – The system eliminates traditional menus. The AI instantly classifies complex voice commands (e.g., "Open my note on World History") and routes directly to the action, drastically improving the user experience.
 - **Persistent Memory** – The system automatically saves the user's lesson progress ($\text{lesson name}$ and $\text{line index}$). On restart, the user is greeted and prompted to instantly resume their learning session.
 - **Interactive Subject Learning** – Structured lessons with voice flow control (`next`, `repeat`, `explain more`).  
@@ -85,3 +85,4 @@ Millions of blind and visually impaired children lack access to quality educatio
 ---
 
 **AI²PBC** — *Transforming accessibility into real, inclusive education.*
+
