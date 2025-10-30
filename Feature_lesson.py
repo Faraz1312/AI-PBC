@@ -7,39 +7,54 @@ from core_state import load_state, save_state, reset_lesson_progress
 import time 
 
 def load_file_lines(folder, filename, config):
+    """Loads and strips non-empty lines from the specified lesson file."""
     try:
         with open(os.path.join(folder, filename), "r", encoding="utf-8") as f:
-            # We preserve the list of lines as is
+            # Reads one natural sentence/segment per list item
             return [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        speak_text("Sorry, that file was not found.", config)
+        speak_text("Sorry, that lesson file was not found.", config)
         return []
 
 def wait_for_next(current_line, previous_line, config):
-    # This function remains efficient and unchanged, receiving only the line just spoken.
+    """Waits for and processes user commands during a lesson segment."""
     while True:
         command = transcribe_audio(config).lower().strip(". ")
-        if any(w in command for w in ["next", "okay", "ok"]): # Added common user confirmations
+        
+        # Accept 'next', 'ok', or 'okay' to advance the lesson
+        if any(w in command for w in ["next", "okay", "ok"]): 
             return 1
+            
         elif "repeat" in command:
             speak_text(current_line, config)
+            
         elif "go back" in command and previous_line:
             speak_text("Going back.", config)
             speak_text(previous_line, config)
             return -1
+            
         elif "skip" in command:
             return 1
+            
         elif "exit" in command:
             return 0
+            
         elif "help" in command:
             speak_text("Say: next, repeat, go back, skip, explain more, or exit.", config)
+            
         elif "explain more" in command:
+            # Use GPT-3.5 to elaborate on the last spoken line
             response = get_llm_response(f"Explain in detail: {current_line}", config)
             speak_text(response, config)
+            
         else:
             speak_text("Say: next, repeat, or explain more.", config)
 
 def run_lesson_module(config, lesson_choice=None, start_index=0):
+    """
+    Main function to run an interactive lesson.
+    Handles lesson selection, state management, and line-by-line reading.
+    """
     
     lesson_map = {
         "math basics": "math_basics.txt",
@@ -47,11 +62,12 @@ def run_lesson_module(config, lesson_choice=None, start_index=0):
         "daily reasoning": "daily_reasoning.txt"
     }
     
+    # 1. Handle Lesson Selection (via Intent slot or voice prompt)
     if not lesson_choice or lesson_choice.lower() not in lesson_map:
         speak_text("Which lesson? Say math basics, real numbers, or daily reasoning.", config)
         lesson_choice = transcribe_audio(config).lower().strip(". ")
         if not lesson_choice or lesson_choice.lower() not in lesson_map:
-            speak_text("No lesson was chosen. Returning to main menu.", config)
+            speak_text("No valid lesson was chosen. Returning to main menu.", config)
             return
 
     filename = lesson_map.get(lesson_choice.lower())
@@ -62,31 +78,30 @@ def run_lesson_module(config, lesson_choice=None, start_index=0):
 
     lines = load_file_lines("lessons", filename, config)
     
+    # 2. Initialization and Resuming State
     i = start_index 
     previous_text = ""
     
-    # *** CRITICAL CHANGE: The index no longer needs to ensure it's on an even number ***
-    # Now, if we resume from an odd index, we just start there.
-    # We only check if we need to announce resuming.
     if i > 0:
         speak_text(f"Resuming lesson: {lesson_choice}.", config)
 
+    # 3. Main Lesson Loop (Reads one line at a time)
     while i < len(lines):
-        # 3. Read lesson content - SPEAK ONLY ONE LINE
         current_line = lines[i]
         
         speak_text(current_line, config)
         
-        # 4. Wait for user command and manage state
-        # We pass the single line spoken as the 'current_line'
+        # Wait for command and get result (1=next, -1=back, 0=exit)
         result = wait_for_next(current_line, previous_text, config)
         
+        # 4. State Management and Index Update
         if result == 1:
-            # Advance one line, save state with the new index
+            # Advance one line (next/ok/skip)
             previous_text, i = current_line, i + 1
             save_state(last_lesson=lesson_choice, lesson_index=i, current_mode="lesson")
         elif result == -1:
-            # Go back one line (i - 1), save state with the new index
+            # Go back one line (go back)
+            # Ensure index doesn't go below zero
             previous_text, i = current_line, max(0, i - 1)
             save_state(last_lesson=lesson_choice, lesson_index=i, current_mode="lesson")
         elif result == 0:
@@ -94,9 +109,10 @@ def run_lesson_module(config, lesson_choice=None, start_index=0):
             save_state(last_lesson=lesson_choice, lesson_index=i, current_mode="lesson")
             break
         else:
-            # Should not happen, but prevents infinite loop/skips ahead by 1
+            # Fail-safe advance
             i += 1 
             
+    # 5. Lesson Completion
     if i >= len(lines):
         speak_text(f"Lesson {lesson_choice} complete! Progress cleared.", config)
         reset_lesson_progress()
